@@ -142,15 +142,23 @@
             fill: #ffffff;
         }
 
-        /* Main CTA - Image Card */
-        .main-cta {
+        /* CTA Row - Side by Side */
+        .cta-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .cta-card {
+            flex: 1;
             display: block;
             position: relative;
-            border-radius: 20px;
-            overflow: visible;
+            border-radius: 16px;
+            overflow: hidden;
             text-decoration: none;
-            margin-bottom: 16px;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .cta-card.primary {
             animation: heartbeatGlow 4s ease-in-out infinite;
         }
 
@@ -159,44 +167,47 @@
                 box-shadow: 0 0 20px rgba(255, 80, 100, 0.0);
             }
             14% { 
-                box-shadow: 0 0 30px rgba(255, 80, 100, 0.4);
+                box-shadow: 0 0 25px rgba(255, 80, 100, 0.35);
             }
             28% { 
                 box-shadow: 0 0 20px rgba(255, 80, 100, 0.1);
             }
             42% { 
-                box-shadow: 0 0 35px rgba(255, 80, 100, 0.5);
+                box-shadow: 0 0 30px rgba(255, 80, 100, 0.4);
             }
             70% { 
                 box-shadow: 0 0 20px rgba(255, 80, 100, 0.0);
             }
         }
 
-        .main-cta-inner {
-            border-radius: 20px;
-            overflow: hidden;
+        .cta-card:hover {
+            transform: translateY(-4px) scale(1.02);
+        }
+
+        .cta-card-inner {
             position: relative;
+            height: 100%;
         }
 
         /* LIVE Badge */
         .live-badge {
             position: absolute;
-            top: 16px;
-            left: 16px;
+            top: 10px;
+            left: 10px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            padding: 8px 12px;
+            padding: 5px 10px;
             border-radius: 20px;
             z-index: 10;
         }
 
         .live-dot {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             background: #ff3b5c;
             border-radius: 50%;
             animation: livePulse 1.5s ease-in-out infinite;
@@ -209,68 +220,46 @@
             }
             50% { 
                 opacity: 0.8;
-                box-shadow: 0 0 0 6px rgba(255, 59, 92, 0);
+                box-shadow: 0 0 0 4px rgba(255, 59, 92, 0);
             }
         }
 
         .live-text {
             font-family: 'Manrope', sans-serif;
-            font-size: 11px;
+            font-size: 9px;
             font-weight: 600;
             color: #ffffff;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
         }
 
-        .main-cta:hover {
-            transform: translateY(-4px) scale(1.01);
-            box-shadow: 
-                0 20px 60px rgba(0, 0, 0, 0.5),
-                0 0 40px rgba(255, 255, 255, 0.1);
-        }
-
-        .main-cta::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0);
-            transition: all 0.4s ease;
-            pointer-events: none;
-        }
-
-        .main-cta:hover::after {
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.05);
-        }
-
-        .main-cta-image {
+        .cta-card-image {
             width: 100%;
-            height: 380px;
+            height: 320px;
             object-fit: cover;
-            object-position: center 30%;
+            object-position: center;
             display: block;
         }
 
-        .main-cta-overlay {
+        .cta-card.primary .cta-card-image {
+            object-position: center 25%;
+        }
+
+        .cta-card-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 40px 20px 20px;
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
-            border-radius: 0 0 20px 20px;
+            padding: 50px 14px 14px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 50%, transparent 100%);
         }
 
-        .main-cta-text {
+        .cta-card-text {
             font-family: 'Manrope', sans-serif;
-            font-size: 15px;
+            font-size: 12px;
             font-weight: 500;
             color: #ffffff;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.2px;
         }
 
         /* Animations on load */
@@ -282,8 +271,8 @@
             animation: fadeIn 0.6s ease-out 0.1s backwards;
         }
 
-        .main-cta {
-            animation: fadeIn 0.6s ease-out 0.2s backwards, heartbeatGlow 4s ease-in-out infinite;
+        .cta-row {
+            animation: fadeIn 0.6s ease-out 0.2s backwards;
         }
 
         @keyframes fadeIn {
@@ -299,14 +288,14 @@
 
         /* Responsive */
         @media (max-width: 420px) {
-            .main-cta-image {
-                height: 360px;
+            .cta-card-image {
+                height: 280px;
             }
         }
         
         @media (max-height: 700px) {
-            .main-cta-image {
-                height: 320px;
+            .cta-card-image {
+                height: 240px;
             }
             .profile-image-wrapper {
                 width: 70px;
@@ -336,25 +325,33 @@
             <a href="https://www.instagram.com/mumujunglefever/" class="social-icon" target="_blank" aria-label="Instagram" onclick="gtag('event', 'click', {event_category: 'Social', event_label: 'Instagram'});">
                 <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
             </a>
-            <a href="https://throne.com/mumujunglefever" class="social-icon gift-icon" target="_blank" aria-label="Wishlist" onclick="gtag('event', 'click', {event_category: 'CTA', event_label: 'Wishlist'});">
-                <svg viewBox="0 0 24 24"><path d="M20 7h-1.209A4.92 4.92 0 0 0 19 5.5C19 3.57 17.43 2 15.5 2c-1.622 0-2.705 1.482-3.404 3.085C11.498 3.527 10.421 2 8.5 2 6.57 2 5 3.57 5 5.5c0 .596.079 1.089.209 1.5H4c-1.103 0-2 .897-2 2v2c0 1.103.897 2 2 2v7c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-7c1.103 0 2-.897 2-2V9c0-1.103-.897-2-2-2zm-4.5-3c.827 0 1.5.673 1.5 1.5C17 7 15.5 7 15.5 7h-2.478c.511-1.576 1.253-3 2.478-3zM7 5.5C7 4.673 7.673 4 8.5 4c1.225 0 1.967 1.424 2.478 3H8.5C8.5 7 7 7 7 5.5zM4 9h7v2H4V9zm2 11v-7h5v7H6zm12 0h-5v-7h5v7zm-5-9V9h7l.001 2H13z"/></svg>
-            </a>
         </div>
 
-        <!-- Main CTA - Image Card -->
-        <a href="https://www.fanvue.com/mumujunglefever/fv-2" class="main-cta" target="_blank" onclick="gtag('event', 'click', {event_category: 'CTA', event_label: 'Fanvue'});">
-            <div class="main-cta-inner">
-                <div class="live-badge">
-                    <div class="live-dot"></div>
-                    <span class="live-text">Live</span>
+        <!-- CTA Row - Side by Side -->
+        <div class="cta-row">
+            <!-- Talk to me - Fanvue -->
+            <a href="https://www.fanvue.com/mumujunglefever/fv-2" class="cta-card primary" target="_blank" onclick="gtag('event', 'click', {event_category: 'CTA', event_label: 'Fanvue'});">
+                <div class="cta-card-inner">
+                    <div class="live-badge">
+                        <div class="live-dot"></div>
+                        <span class="live-text">Live</span>
+                    </div>
+                    <img src="https://i.ibb.co/kg0MpVNp/XDTI7en-T8-Usj-FRL0-PFEO.png" alt="Talk to me" class="cta-card-image">
+                    <div class="cta-card-overlay">
+                        <p class="cta-card-text">talk to me here →</p>
+                    </div>
                 </div>
-                <img src="https://i.ibb.co/kg0MpVNp/XDTI7en-T8-Usj-FRL0-PFEO.png" alt="Talk to me" class="main-cta-image">
-                <div class="main-cta-overlay">
-                    <p class="main-cta-text">talk to me here →</p>
-                </div>
-            </div>
-        </a>
+            </a>
 
+            <!-- Wishlist - Throne -->
+            <a href="https://throne.com/mumujunglefever" class="cta-card" target="_blank" onclick="gtag('event', 'click', {event_category: 'CTA', event_label: 'Wishlist'});">
+                <div class="cta-card-inner">
+                    <img src="https://i.ibb.co/0j0WTDBt/Screenshot-2026-01-12-at-7-43-57-PM.png" alt="Wishlist" class="cta-card-image">
+                    <div class="cta-card-overlay">
+                        <p class="cta-card-text">the way to my heart 💝</p>
+                    </div>
+                </div>
+            </a>
         </div>
     </div>
 </body>
