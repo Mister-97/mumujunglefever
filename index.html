@@ -138,25 +138,79 @@
             display: block;
             position: relative;
             border-radius: 20px;
-            overflow: hidden;
+            overflow: visible;
             text-decoration: none;
             margin-bottom: 16px;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            padding: 2px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.05), rgba(255,255,255,0.3));
-            background-size: 200% 200%;
-            animation: borderGlow 3s ease-in-out infinite;
+            animation: heartbeatGlow 2s ease-in-out infinite;
         }
 
-        @keyframes borderGlow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        @keyframes heartbeatGlow {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(255, 80, 100, 0.0);
+            }
+            14% { 
+                box-shadow: 0 0 30px rgba(255, 80, 100, 0.4);
+            }
+            28% { 
+                box-shadow: 0 0 20px rgba(255, 80, 100, 0.1);
+            }
+            42% { 
+                box-shadow: 0 0 35px rgba(255, 80, 100, 0.5);
+            }
+            70% { 
+                box-shadow: 0 0 20px rgba(255, 80, 100, 0.0);
+            }
         }
 
         .main-cta-inner {
-            border-radius: 18px;
+            border-radius: 20px;
             overflow: hidden;
             position: relative;
+        }
+
+        /* LIVE Badge */
+        .live-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 8px 12px;
+            border-radius: 20px;
+            z-index: 10;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #ff3b5c;
+            border-radius: 50%;
+            animation: livePulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { 
+                opacity: 1;
+                box-shadow: 0 0 0 0 rgba(255, 59, 92, 0.7);
+            }
+            50% { 
+                opacity: 0.8;
+                box-shadow: 0 0 0 6px rgba(255, 59, 92, 0);
+            }
+        }
+
+        .live-text {
+            font-family: 'Manrope', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .main-cta:hover {
@@ -199,7 +253,7 @@
             right: 0;
             padding: 60px 24px 24px;
             background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
-            border-radius: 0 0 18px 18px;
+            border-radius: 0 0 20px 20px;
         }
 
         .main-cta-text {
@@ -298,6 +352,10 @@
         <!-- Main CTA - Image Card -->
         <a href="https://www.fanvue.com/mumujunglefever/fv-2" class="main-cta" target="_blank">
             <div class="main-cta-inner">
+                <div class="live-badge">
+                    <div class="live-dot"></div>
+                    <span class="live-text">Live</span>
+                </div>
                 <img src="https://i.ibb.co/kg0MpVNp/XDTI7en-T8-Usj-FRL0-PFEO.png" alt="Talk to me" class="main-cta-image">
                 <div class="main-cta-overlay">
                     <p class="main-cta-text">talk to me here →</p>
