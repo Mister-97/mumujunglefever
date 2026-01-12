@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@mumujunglefever</title>
     
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💋</text></svg>">
+    
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Mumu | @mumujunglefever">
@@ -47,6 +50,31 @@
             padding: 40px 16px 24px;
             position: relative;
             overflow-x: hidden;
+        }
+
+        /* Animated background gradient */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(80, 30, 40, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(100, 40, 50, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(70, 25, 35, 0.08) 0%, transparent 60%);
+            background-size: 200% 200%;
+            animation: bgMove 20s ease-in-out infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes bgMove {
+            0%, 100% { background-position: 0% 0%; }
+            25% { background-position: 100% 0%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
         }
 
         .container {
@@ -182,11 +210,39 @@
 
         .cta-card:hover {
             transform: translateY(-4px) scale(1.02);
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='80'%3E💋%3C/text%3E%3C/svg%3E") 16 16, pointer;
         }
 
         .cta-card-inner {
             position: relative;
             height: 100%;
+            overflow: hidden;
+        }
+
+        /* Shimmer effect */
+        .cta-card-inner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.08),
+                rgba(255, 255, 255, 0.15),
+                rgba(255, 255, 255, 0.08),
+                transparent
+            );
+            animation: shimmer 4s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50%, 100% { left: 150%; }
         }
 
         /* LIVE Badge */
@@ -231,6 +287,22 @@
             color: #ffffff;
             letter-spacing: 0.5px;
             text-transform: uppercase;
+        }
+
+        .viewers-count {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-family: 'Manrope', sans-serif;
+            font-size: 10px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 4px 8px;
+            border-radius: 10px;
+            z-index: 10;
         }
 
         .cta-card-image {
@@ -306,6 +378,62 @@
                 height: 70px;
             }
         }
+
+        /* Popup Modal */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .popup-overlay.active {
+            display: flex;
+            animation: fadeInPopup 0.3s ease;
+        }
+
+        @keyframes fadeInPopup {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .popup-content {
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 32px 28px;
+            max-width: 320px;
+            text-align: center;
+            animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .popup-text {
+            font-family: 'Manrope', sans-serif;
+            font-size: 18px;
+            font-weight: 500;
+            color: #ffffff;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .popup-timer {
+            font-family: 'Manrope', sans-serif;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -317,7 +445,7 @@
                 <img src="https://i.ibb.co/NgJb7KN8/r4r3r3.png" alt="Mumu" class="profile-image">
             </div>
             <h1 class="profile-name">mumu</h1>
-            <p class="profile-tagline">you know you want to</p>
+            <p class="profile-tagline">come find out</p>
         </div>
 
         <!-- Social Icons -->
@@ -336,23 +464,63 @@
                         <div class="live-dot"></div>
                         <span class="live-text">Live</span>
                     </div>
+                    <div class="viewers-count" id="viewersCount">12 viewing now</div>
                     <img src="https://i.ibb.co/kg0MpVNp/XDTI7en-T8-Usj-FRL0-PFEO.png" alt="Talk to me" class="cta-card-image">
                     <div class="cta-card-overlay">
-                        <p class="cta-card-text">talk to me here →</p>
+                        <p class="cta-card-text">come talk to me</p>
                     </div>
                 </div>
             </a>
 
             <!-- Wishlist - Throne -->
-            <a href="https://throne.com/mumujunglefever" class="cta-card" target="_blank" onclick="gtag('event', 'click', {event_category: 'CTA', event_label: 'Wishlist'});">
+            <a href="#" class="cta-card" onclick="showWishlistPopup(event);">
                 <div class="cta-card-inner">
-                    <img src="https://i.ibb.co/0j0WTDBt/Screenshot-2026-01-12-at-7-43-57-PM.png" alt="Wishlist" class="cta-card-image">
+                    <img src="https://i.ibb.co/FL92MYHX/Screenshot-2026-01-12-at-7-57-10-PM.png" alt="Wishlist" class="cta-card-image">
                     <div class="cta-card-overlay">
                         <p class="cta-card-text">the way to my heart 💝</p>
                     </div>
                 </div>
             </a>
         </div>
+
+        <!-- Popup Modal -->
+        <div class="popup-overlay" id="wishlistPopup">
+            <div class="popup-content">
+                <p class="popup-text">"Gift me a lingerie set and I'll wear it for you 😌"</p>
+                <p class="popup-timer">Redirecting in <span id="countdown">3</span>s...</p>
+            </div>
+        </div>
     </div>
+
+    <script>
+        function showWishlistPopup(e) {
+            e.preventDefault();
+            gtag('event', 'click', {event_category: 'CTA', event_label: 'Wishlist'});
+            
+            const popup = document.getElementById('wishlistPopup');
+            const countdown = document.getElementById('countdown');
+            popup.classList.add('active');
+            
+            let seconds = 3;
+            const timer = setInterval(() => {
+                seconds--;
+                countdown.textContent = seconds;
+                if (seconds <= 0) {
+                    clearInterval(timer);
+                    window.open('https://throne.com/mumujunglefever', '_blank');
+                    popup.classList.remove('active');
+                    countdown.textContent = '3';
+                }
+            }, 1000);
+        }
+
+        // Fluctuate viewer count
+        const viewersCount = document.getElementById('viewersCount');
+        function updateViewers() {
+            const count = Math.floor(Math.random() * (24 - 8 + 1)) + 8;
+            viewersCount.textContent = count + ' viewing now';
+        }
+        setInterval(updateViewers, 5000);
+    </script>
 </body>
 </html>
