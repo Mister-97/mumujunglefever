@@ -507,9 +507,9 @@
                 countdown.textContent = seconds;
                 if (seconds <= 0) {
                     clearInterval(timer);
-                    window.open('https://throne.com/mumujunglefever', '_blank');
                     popup.classList.remove('active');
                     countdown.textContent = '3';
+                    window.location.href = 'https://throne.com/mumujunglefever';
                 }
             }, 1000);
         }
